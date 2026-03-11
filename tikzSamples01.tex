@@ -1,0 +1,359 @@
+
+\documentclass[dvipdfmx,11pt,a4j]{jarticle}
+
+%以下，\begin{document} までは，文書スタイルの設定や，自作カウンター，自作コマンドの定義等を書く場所です。
+% デフォルトでよいなら，何も書かなくてもいいです。
+
+
+%** 使用したいパッケージを読み込む  **
+\usepackage[dvips]{graphicx,color}    %pdf化は dvipdfmx -l hoge.dvi
+\usepackage{wrapfig}
+
+%↓ 上下左右のマージンを設定する
+\usepackage{geometry} 
+	\geometry{left=13truemm,right=13truemm,top=15truemm,bottom=13truemm}
+
+%↓ 図を描画するためのパッケージ
+\usepackage{tikz}
+\usetikzlibrary {arrows.meta}
+\usetikzlibrary {bending}
+\usetikzlibrary{calc}
+
+%↓  デフォルト以外の数式のフォントや，数式環境をつかうため
+\usepackage{ascmac}
+\usepackage{amsfonts}
+
+%↓  長文のコメントアウトができるようにする
+\usepackage{comment}
+
+%**  デフォルトで既に定義されているコマンドを，好みに応じて再定義する **
+
+%↓ 式番号，図番号，表番号を，(2.4)のように，節番号も表示させる
+% デフォルトでは節番号は付かずに，最初からの通し番号になる
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+  \makeatletter
+  \@addtoreset{equation}{section}
+  \@addtoreset{figure}{section}
+  \@addtoreset{table}{section}
+  \makeatother
+
+
+%↓ 行間隔を設定 
+% 設定しなければデフォルト値になる
+\baselineskip=.75cm
+% ページ番号無しに
+\pagestyle{empty}
+
+\begin{document}
+
+
+\begin{tikzpicture}[x=1mm,y=1mm]
+%** 半径1の扇型を  図では半径が25mmとしている 
+% (25,0) から中心角45度の弧を描く
+\draw [blue, thick] (25,0) arc(0:45:25);
+
+% 弧の両端から原点(0,0)の半径の線分を引いて扇型を完成
+\draw [thick] (45:25) -- (0,0) -- (25,0);
+
+% 中心角を描く (半径5 mm，つまり(5,0)から45度の弧を描く  
+\draw [blue] (5,0) arc(0:45:5);
+
+% 極座標( θ＝20度：ｒ＝5.4mm)の右上に，中心角を示すθ〔rad〕の文字を書く
+\draw (20:5.4) node[above right] {\small $\theta$〔rad〕};
+
+% 極座標(20度：距離27mm)の右上に，弧の長さを示すθの文字を書く
+\draw (20:27) node[above right] {\small $\theta$};
+
+% 半径の寸法
+\draw (0,0) to[out=-45, in=180] (8,-5);
+\draw (25,0) to[out=-135, in=0] (17,-5);
+\draw (12.5,-5) node {1};
+
+% %** 半径Rの扇型  50mmを半径として，頂点の座標は(60,0) *** 
+% % 弧の下側(110,0)から，中心角45度，半径50mmの弧を描く
+% \draw [green, thick] (110,0) arc(0:45:50);
+
+% % 扇型の二本の半径
+% \draw [thick] (110,0) -- (60,0) --++ (45:50);
+
+% % 中心角の記入
+% \draw [blue] (65,0) arc(0:45:5);
+% \draw (60,0) ++ (20:5.4) node[above right] {\small $\theta$〔rad〕};
+
+% % 弧の長さの記入
+% \draw (60,0) ++ (20:52) node[above right] {$L =R\,\theta$};
+
+% % 半径の寸法
+% \draw (60,0) to[out=-30, in=180] (80,-5);
+% \draw (110,0) to[out=-150, in=0] (90,-5);
+% \draw (85,-5) node {\small $r$〔m〕};
+% \end{tikzpicture}
+
+% \vspace{8mm}
+
+% \begin{tikzpicture}[x=1mm, y=1mm]
+% %% 座標軸　
+% \draw [-{stealth[length=2]}] (-5,0) -- (45,0) node[right] {\small $x$};
+% \draw [-{stealth[length=2]}] (0,-5) -- (0,45) node[above] {\small $y$};
+% %% 1/4円，  半径40mmの円弧で，極座標の角度が -5度から95度の部分 
+% \draw (-5:40) arc(-5:95:40);
+% % x軸のところに座標を表わす Rの文字
+% \draw (40,0) node[below right] {\small $R$};
+% % 物体， ふちの線が黒，中が灰色(黒が25%)の円で， 半径が2mm，中心の極座標が(30度，r=40mm)に中心がある
+% \filldraw [fill=black!25] (30:40) circle (2);
+% % 各座標を示すための点線， 物体の中心から各軸に平行に引かれ，それぞれの交点のところに x(t)，y(t)の文字
+% \draw [dashed] (0,20) node[left] {\small $y(t)$} -- (30:40) --++ (0,-20) node[below] {\small $x(t)$};
+% % 動径
+% \draw [thick, -{stealth[length=2]}] (0,0) -- (30:40);
+% \draw (30:25) node[above left] {\small $\vec{r}(t)$}; 
+% \end{tikzpicture}
+
+
+% \vspace{8mm}
+
+% \begin{tikzpicture}[x=1mm,y=1mm]
+% %% 座標軸
+% \draw [-{stealth[length=2]}] (-5,0) -- (80,0) node[right] {\small $t$};
+% \draw [-{stealth[length=2]}] (0,-15) -- (0,15) node[above] {\small {\color{blue}$x$},{\color{green}$y$}};
+
+% % 振幅を表わす点線， 振幅を10mm
+% \draw [dashed] (0,10) node[left] {\small $R$} --++ (80,0);
+% \draw [dashed] (0,-10) node[left] {\small $-R$} --++ (80,0);
+% % x(t)のグラフ, 振幅が10mm，31.4mmに1周期分のコサイン曲線で， 横軸が0～ 79mmまでの部分を描画 
+% \draw [blue,domain=0:79, samples=400] 
+% 	plot(\x,{10*cos(0.2*\x r)});
+% % y(t)のグラフ, 振幅が10mm，31.4mmに1周期分のサイン曲線で， 横軸が0～ 79mmまでの部分を描画 
+% \draw [green,domain=0:79, samples=400] 
+% 	plot(\x,{10*sin(0.2*\x r)});
+% \end{tikzpicture}
+
+% \vspace{8mm}
+
+% \begin{tikzpicture}[x=1mm,y=1mm]
+% %% 物体
+% \filldraw [fill=black!25] (-10:45) circle (3);
+% \draw (-10:45) ++ (70:3) node[above right] {\small P};
+% %% 回転運動の軌道
+% \draw [gray, -{stealth[length=2]}] (-10:45) arc (-45:10:20);
+% %% ベクトル
+% \draw [thick, -{stealth[length=2]}] (0,0) --++ (-10:45);
+% \draw (-10:34) node[below left] {$\vec{r}(t)$};
+% %
+% \draw [thick, -{stealth[length=2]}] (-10:45) --++ (45:25) node[above left] {$vec{F}$};
+% \draw [thick, gray, -{stealth[length=2]}] 
+% 	(0,0) --++ (45:25);
+% % 
+% \draw [blue, thick, -{stealth[length=2]}] (0,0) -- (0,34) node[above] {$\vec{N}(t)$};
+% %% 中心点
+% \fill (0,0) node[below left] {O} circle (1.5pt);
+% \end{tikzpicture}
+
+
+% \vspace{8mm}
+
+
+% \begin{center}
+% \begin{minipage}{5.4cm}
+% \begin{tikzpicture}[x=1mm,y=1mm]
+% % 電子は黒で塗り潰した丸 (半径1.5mm)
+% \fill (0,0) circle(1.5); 
+% % 力のベクトル (電気力は右向きで，長さ20mmの青色矢印)
+% \draw [blue, thick,-{stealth[length=2]}] (0.3,0) --++ (15,0) node[above left] {\small $F_e$};
+
+% % 右断面 左半分奥側)の円弧
+% \draw [brown, dashed] (21,8) arc[start angle=90, end angle=270, x radius=3.5, y radius=8];
+
+% % 導体棒の塗り潰し，長さ42mm，左右の断面を表わす楕円は 縦半径8mm，横半径が3.5mm
+% \fill [brown!50, opacity=0.2] 
+% 	(-21,8) arc[start angle=90, end angle=270, x radius=3.5, y radius=8] --++ (42,0) arc[start angle=-90, end angle=90, x radius=3.5, y radius=8] -- cycle;
+
+% % 左断面の楕円 点線 
+% \draw [brown, dashed] (-21,0) circle[x radius=3.5, y radius=8];
+
+% % 右側の右半分  手前
+% \draw [brown, dashed] (21,-8) arc[start angle=-90, end angle=90, x radius=3.5, y radius=8];
+
+% % 導体棒の上下の線分
+% \draw [brown, thick] (-21,8) --++ (42,0);
+% \draw [brown, thick] (-21,-8) --++ (42,0);
+
+% \end{tikzpicture}
+% \end{minipage}
+% % 中央の図は少しだけ時間が経過
+% \begin{minipage}{5.4cm}
+% \begin{tikzpicture}[x=1mm,y=1mm]
+
+% % 電子は黒で塗り潰した丸 (半径1.5mm)
+% \fill (0,0) circle(1.5); 
+
+% % 電気力のベクトル (右向きで，長さ20mmの青色矢印)
+% \draw [blue, thick,-{stealth[length=2]}] (0.3,0) --++ (15,0) node[above left] {\small $F_e$};
+
+% % 抵抗力のベクトル (左向きで，長さ7.5mmの緑色矢印)
+% \draw [green, thick,-{stealth[length=2]}] (-0.3,0) --++ (-7.5,0) node[above right] {\small $F_r$};
+
+% % 右断面 左半分奥側)の円弧
+% \draw [brown, dashed] (21,8) arc[start angle=90, end angle=270, x radius=3.5, y radius=8];
+
+% % 導体棒の塗り潰し，長さ42mm，左右の断面を表わす楕円は 縦半径8mm，横半径が3.5mm
+% \fill [brown!50, opacity=0.2] 
+% 	(-21,8) arc[start angle=90, end angle=270, x radius=3.5, y radius=8] --++ (42,0) arc[start angle=-90, end angle=90, x radius=3.5, y radius=8] -- cycle;
+
+% % 左断面の楕円 点線 
+% \draw [brown, dashed] (-21,0) circle[x radius=3.5, y radius=8];
+
+% % 右側の右半分  手前
+% \draw [brown, dashed] (21,-8) arc[start angle=-90, end angle=90, x radius=3.5, y radius=8];
+
+% % 導体棒の上下の線分
+% \draw [brown, thick] (-21,8) --++ (42,0);
+% \draw [brown, thick] (-21,-8) --++ (42,0);
+% \end{tikzpicture}
+% \end{minipage}
+% % 右側の図は 電気力と抵抗力がつり合った最終段階の図
+% \begin{minipage}{5.4cm}
+% \begin{tikzpicture}[x=1mm,y=1mm]
+
+% % 電子は黒で塗り潰した丸 (半径1.5mm)
+% \fill (0,0) circle(1.5); 
+
+% % 電気力のベクトル (右向きで，長さ20mmの青色矢印)
+% \draw [blue, thick,-{stealth[length=2]}] (0.3,0) --++ (15,0) node[above left] {\small $F_e$};
+
+% % 抵抗力のベクトル (左向きで，長さ7.5mmの緑色矢印)
+% \draw [green, thick,-{stealth[length=2]}] (-0.3,0) --++ (-7.5,0) node[above right] {\small $F_r$};
+
+% % 右断面 左半分奥側)の円弧
+% \draw [brown, dashed] (21,8) arc[start angle=90, end angle=270, x radius=3.5, y radius=8];
+
+% % 導体棒の塗り潰し，長さ42mm，左右の断面を表わす楕円は 縦半径8mm，横半径が3.5mm
+% \fill [brown!50, opacity=0.2] 
+% 	(-21,8) arc[start angle=90, end angle=270, x radius=3.5, y radius=8] --++ (42,0) arc[start angle=-90, end angle=90, x radius=3.5, y radius=8] -- cycle;
+
+% % 左断面の楕円 点線 
+% \draw [brown, dashed] (-21,0) circle[x radius=3.5, y radius=8];
+
+% % 右側の右半分  手前
+% \draw [brown, dashed] (21,-8) arc[start angle=-90, end angle=90, x radius=3.5, y radius=8];
+
+% % 導体棒の上下の線分
+% \draw [brown, thick] (-21,8) --++ (42,0);
+% \draw [brown, thick] (-21,-8) --++ (42,0);
+% \end{tikzpicture}
+% \end{minipage}
+% \end{center}
+
+% \vspace{8mm}
+
+% \begin{tikzpicture}[x=1mm,y=1mm]
+% %% 波形  6 mmで6.28　　k =1.047
+% \draw [thick, domain=-50:0, samples=250]
+% 	plot (\x, {12*sin(1.047*\x r)});
+% \draw [thick, domain=0:50, samples=250]
+% 	plot (\x, {5*sin(1.047*\x r)});
+% %% 障壁
+% \fill [black!25] (-1.5,13) rectangle (6.5,-12); 
+% %% 障壁のなかの波動
+% \draw (-1.5,-12) to[out=0, in=77.35] (6.5,2.5);
+% %% 座標軸
+% \draw [-stealth] (-50,0) -- (50,0) node[right] {\small $x$};
+% \draw [-stealth] (-1.5,-15) -- (-1.5,15) node[above] {\small $\phi(x)$};
+% %% 粒子の進行方向
+% \draw [thick, blue, -stealth] (-60,7) node[above] {\small $C_+\, e^{ikx}$} --++ (45,0);
+% \draw [thick, red, stealth-] (-60,-7) node[below] {\small $C_-\, e^{-ikx}$} --++ (30,0);
+% \draw [thick, green, -stealth] (29,7) --++ (15,0)node[above left] {\small $C_+\, e^{ikx}$};
+\end{tikzpicture}
+
+
+\end{document}
+
+\begin{comment}
+【描画環境の説明】
+《一般的事項》
+・\begin{tikzpicture} ～ \end{tikzpicture}に描画するコマンドを書く。
+・\begin{tikzpicture}の右の [x=1mm,y=1mm]は
+　x座標とy座標の数値の単位を指定するオプションです。
+　(デフォルトでは「cm」単位です。)
+　例えば，(24,8) と座標を書くと，x=25mm, y=8mm の点を指定します。
+・各行頭の \draw は，線や文字を記述するコマンド，
+　\fill は閉じた図形に対して，中を塗り潰します。
+・ひとつの図形が描き終わったら，最後に「；」を付けます。
+《座標の指定》
+・「直交座標」，「極座標」のどちらもつかえます。
+　(25,8)と「，」で区切ると直交座標系での位置，
+　(50:34)と「：」で区切ると「原点を中心とする」極座標で，θ=50度，r=34mmの位置を指定します。
+《線分の描画》
+・(x1,y1) -- (x2,y2)のように「--」でつなぐと，「絶対座標」で2点間を結びます。
+・(x1,y1) --++ (a,b) のように「--++」でつなぐと，(x1,y1)から  x方向にaだけシフト，y方向にbシフトした点まで線を引きます。
+　例えば，(10,20) --++ (8,4) と (10,20) -- (18,24)は同じ線になります。
+・複数の線分を組み合わせたものを一気に一筆書きできます。
+　例えば，(x1,y1) -- (x2,y2) -- (x3,y3) や
+　(x1,y1) -- (x2,y2) --++ (θ：r) --++ (a,b)
+《円，楕円の描画》
+・ (x,y) circle (r) は，(x,y)を中心とした 半径rの円です。
+・ (x,y) circle[x radius=a, y radius=b] とすると，(x,y)を中心として，x軸方向の半径がa, y軸方向の半径がbの楕円になります。
+《円弧の描画》
+・ちょっと複雑ですが，中心が(x0,y0)，半径rの円周の一部の円弧を描く方法は，
+　(x1,y1) arc(θ1:θ2:r)とします。
+・　中心座標(x0,y0)は指定する必要はありません。
+・(x1,y1)は円弧の始点の座標です。
+・第1引数のθ1は，(x0,y0)と(x1,y1)を結ぶ線分(半径)がx軸方向となす角度です。
+・第2引数のθ2は，(x0,y0)と円弧の終点を結ぶ線分(半径)がx軸方向となす角度です。
+　つまり，円弧の両端と中心を結んでできる扇型の半径はr，中心角はθ2-θ1度です。
+《文字の記入》
+・文字「あ」を記入するには，
+　 (x,y) node[位置のオプション] {あ} が基本です。
+　[ ] を書かなければ，(x,y)を中心とする領域に書かれます。
+　[above] とすると，(x,y)の真上に書かれます。
+　[above left]とすると，(x,y)の左上に書かれます。
+　その他，[left]，[below left]，[below]，[below right]，[right]，[above right]があります。
+\end{comment}
+
+
+\begin{comment}
+【説明】
+《矢印の描画》
+　\draw の [オプション] に次のように指定する
+・　\draw[->] (x1,y1) -- (x2,y2);
+　点(x2,y2) 側に不等号「＞」タイプの矢印が付く。
+・\draw[<-] (x1,y1) -- (x2,y2);
+　点(x1,y1) 側に不等号「＜」タイプの矢印が付く。
+・\draw[<->] (x1,y1) -- (x2,y2);
+　両側に不等号タイプの矢印が付く。
+・矢印の形状には他に2通りあります。
+　「latex」 (-latex, latex-) は黒塗りの三角形，
+　「stealth」 (-stealth, stealth-) は黒塗りの矢じりのような形状
+・ただし，なぜか矢印が小さいので，大きくするためには，(例えば) -{>[length=2]} のようにすると，矢印の長さが2mmになります。
+・その他，いろいろ凝った矢印が描けるようですが，私は使いこなせていません。
+《塗り潰し》
+・\filldraw[fill=色1,draw=色2] circle (r);
+　とすると，半径がｒの円で，中の塗り潰す色が「色1」，ふちが「色2」になります。
+《グラフの描画》
+　基本形は\draw [domain=x1:x2, samples=N] plot(\x,{\xを引数とする関数式});
+・関数の引数を\x と書きます。\a でも何でもいいのですが，通常関数の引数はx なので \x とします。
+・domain は，その関数のどの領域を描くかを指定します。 x1 ≦ \x ≦ x2 の領域が描かれます。
+・sample は何個のドットでその関数を描くかを指定します。
+　どうやら，曲線は「点」をたくさん売って描いているようです。
+・サイン関数は sin(k*\x r)のように位相の式の後ろに スペースを空けて r と記入するとラジアンになります。
+　例えば，sin(0.1*\x r)とすると， \x=62.83mのところで位相が2πラジアンになります。
+\end{comment}
+
+\begin{comment}
+【説明】
+《楕円の一部の円弧の描き方》
+基本形は (x,y) arc[start angle=θ1, end angle=θ2, x radius=a, y radius=b]
+・真円の円弧 (x,y) arc(θ1:θ2:r) と同じです。
+　円弧の場合の第3引数は円の半径だったのに対して，
+　楕円弧の第3，第4引数で楕円のx軸方向の半径と，y軸方向の半径を指定します。
+・円弧の場合も同じですが，(x,y) arc[…]と書くと，(x,y)を端点とする(楕)円弧を描き，その終点の座標が自動的に格納されています。
+　よって，(x1,y1) arc[…] -- (x2,y2) と書くと，
+　(x1,y1) から指定通りに(楕)円弧を描いた後，その終点から(x2,y2)まで直線を引きます。
+《塗り潰し》
+　fill [色, opacity=0.3] とすると，透明度が 1-0.3 = 0.7 の透明度の塗り潰しになるため，
+　その行の上に描いた図形が70％透けて見えているようになります。
+　つまり，opacityは「不」透明度を示すパラメータで，1が透けない，0がスケスケということです。
+\end{comment}
+

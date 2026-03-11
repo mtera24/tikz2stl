@@ -1,0 +1,11 @@
+# まず、すべての .log 拡張子を無視する
+*.log
+*.aux
+*.dvi
+*.pdf
+*.scad
+*.stl
+*.svg
+
+# ただし、important.log だけは無視しない（否定）
+!sub/template.scad

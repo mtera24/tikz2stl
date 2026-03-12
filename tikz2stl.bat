@@ -17,7 +17,7 @@ if %ERRORLEVEL% neq 0 (
 echo [SUCCESS] platexでdviファイルの生成に正常に完了しました。
 
 rem dvi -> pdf
-dvipdfmx "%~n1.dvi"
+dvipdfmx "%~n1.dvi"  > nul 2>&1
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] dvipdfmxでpdfファイルの生成に失敗しました。
     exit /b %ERRORLEVEL%
@@ -41,14 +41,14 @@ if %ERRORLEVEL% neq 0 (
 echo [SUCCESS] svg4openscad.pyでsvgファイルの変換に正常に完了しました。
 
 rem --- svg2stl の処理 ---
-copy "%~n1_4scad.svg" "%~n1.svg" /y
+copy "%~n1_4scad.svg" "%~n1.svg" /y > nul
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] copyでsvgファイルのコピーに失敗しました。
     exit /b %ERRORLEVEL%
 )
 
 rem scadファイル作成
-copy "sub\template.scad" "%~n1.scad" /y
+copy "sub\template.scad" "%~n1.scad" /y >nul
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] copyでscadファイルの生成に失敗しました。
     exit /b %ERRORLEVEL%
@@ -59,7 +59,7 @@ echo linear_extrude(height=1) import("%~n1.svg", center = true, dpi = 960); >> "
 
 rem scad -> stl
 echo これからopenSCADでstlに変換します。すこし時間がかかります。
-"C:\Program Files\OpenSCAD\openscad.exe" -o "%~n1.stl" "%~n1.scad"
+"C:\Program Files\OpenSCAD\openscad.exe" -o "%~n1.stl" "%~n1.scad"  2> nul
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] openSCADでstlファイルの生成に失敗しました。
     exit /b %ERRORLEVEL%
